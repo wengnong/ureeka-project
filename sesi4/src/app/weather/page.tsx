@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button"
+import Image from "next/image"
 import Link from "next/link"
 
 interface Post {
@@ -71,14 +72,50 @@ export default async function WeatherPage() {
 
     return (
         <div className="min-h-screen w-full flex flex-col justify-center items-center">
-            <div className="flex flex-col justify-center items-center border-2 px-12 py-18 border-white">
-                <h1 className="text-xl text-center">Weather in <br /> <span className="text-4xl text-blue-500 font-semibold uppercase">{post.location.name}</span></h1>
+            <div className="flex flex-col justify-center items-center border-2 px-12 py-18 border-white text-center">
+                <h1 className="text-xl">Weather in <br /> <span className="text-4xl text-blue-500 font-semibold uppercase">{post.location.name}</span></h1>
                 <p className="text-blue-300">{post.location.region}, {post.location.country}</p>
 
-                <p className="text-center text-xs">Local Time <br /> {post.location.localtime}</p>
-                <div className="mt-6 text-sm flex flex-row gap-20 justify-between">
-                    <span>Latitude</span>
-                    <span>{post.location.lat}</span>
+                <Image 
+                    src={post.current.weather_icons[0]}
+                    width={100}
+                    height={100}
+                    alt="Weather Icon"
+                    className="rounded-full my-4"
+                />
+                <p className="text-md uppercase font-bold text-blue-200">{post.current.weather_descriptions}</p>
+
+                <p className="text-xs">Local Time and Timezone <br /> {post.location.localtime} <br /> {post.location.timezone_id}</p>
+
+                <p className="text-4xl my-4 font-bold text-blue-200">{post.current.temperature}&deg;C</p>
+                <p className="uppercase font-light text-sm">Humidity {post.current.humidity}</p>
+
+                <div className="mt-6 text-sm">
+                    <div className="flex flex-row gap-20 justify-between">
+                        <span>Latitude</span>
+                        <span>{post.location.lat}</span>
+                    </div>
+                    <div className="flex flex-row gap-20 justify-between">
+                        <span>Longitude</span>
+                        <span>{post.location.lon}</span>
+                    </div>
+                    <br />
+                    <div className="flex flex-row gap-20 justify-between">
+                        <span>Sunrise</span>
+                        <span>{post.current.astro.sunrise}</span>
+                    </div>
+                    <div className="flex flex-row gap-20 justify-between">
+                        <span>Sunset</span>
+                        <span>{post.current.astro.sunset}</span>
+                    </div>
+                    <div className="flex flex-row gap-20 justify-between">
+                        <span>Moonrise</span>
+                        <span>{post.current.astro.moonrise}</span>
+                    </div>
+                    <div className="flex flex-row gap-20 justify-between">
+                        <span>Moonset</span>
+                        <span>{post.current.astro.moonset}</span>
+                    </div>
                 </div>
             </div>
 
